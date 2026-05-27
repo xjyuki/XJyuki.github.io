@@ -1,1 +1,205 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>影视飓风 | 影像传递热爱</title>
+  <!-- 引入Tailwind CSS（快速实现苹果风格） -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- 引入Font Awesome图标 -->
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <!-- 苹果风格配置 -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            apple: {
+              gray: '#F5F5F7',
+              dark: '#1D1D1F',
+              blue: '#0071E3',
+              light: '#FFFFFF'
+            }
+          },
+          fontFamily: {
+            sans: ['-apple-system', 'BlinkMacSystemFont', 'Inter', 'sans-serif']
+          },
+          boxShadow: {
+            'apple': '0 4px 20px rgba(0, 0, 0, 0.08)',
+            'apple-hover': '0 8px 30px rgba(0, 0, 0, 0.12)'
+          }
+        }
+      }
+    }
+  </script>
+  <style type="text/tailwindcss">
+    @layer utilities {
+      /* 苹果毛玻璃效果 */
+      .glass {
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        background-color: rgba(255, 255, 255, 0.8);
+      }
+      /* 苹果渐变文字 */
+      .text-gradient {
+        background: linear-gradient(90deg, #0071E3, #5AC8FA);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      /* 平滑滚动 */
+      html {
+        scroll-behavior: smooth;
+      }
+      /* 卡片微动效 */
+      .card-hover {
+        transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+      }
+    }
+  </style>
+</head>
+<body class="bg-apple-gray text-apple-dark overflow-x-hidden">
+  <!-- 顶部导航栏 - 苹果毛玻璃固定导航 -->
+  <nav class="glass fixed w-full top-0 z-50 px-4 md:px-8 py-3">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <a href="#" class="flex items-center gap-2">
+        <span class="text-xl font-bold text-gradient">影视飓风</span>
+      </a>
+      <div class="hidden md:flex items-center gap-8">
+        <a href="#home" class="hover:text-apple-blue transition-colors">首页</a>
+        <a href="#about" class="hover:text-apple-blue transition-colors">关于</a>
+        <a href="#works" class="hover:text-apple-blue transition-colors">代表作</a>
+        <a href="#idea" class="hover:text-apple-blue transition-colors">理念</a>
+      </div>
+      <button class="md:hidden text-xl">
+        <i class="fa fa-bars"></i>
+      </button>
+    </div>
+  </nav>
 
+  <!-- 英雄区 - 苹果式全屏极简主页 -->
+  <section id="home" class="min-h-screen flex items-center justify-center px-4 pt-20">
+    <div class="max-w-6xl mx-auto text-center">
+      <h1 class="text-[clamp(2.5rem,8vw,5rem)] font-bold leading-tight mb-6">
+        用<span class="text-gradient">影像</span>传递热爱
+      </h1>
+      <p class="text-[clamp(1rem,3vw,1.5rem)] text-gray-600 max-w-3xl mx-auto mb-10">
+        B站头部影像科技UP主 · 专业影视器材评测 · 沉浸式影像创作分享
+      </p>
+      <div class="flex flex-wrap justify-center gap-4">
+        <a href="#works" class="px-8 py-4 bg-apple-blue text-white rounded-full shadow-apple card-hover hover:shadow-apple-hover hover:scale-105">
+          查看代表作
+        </a>
+        <a href="https://space.bilibili.com/144318" target="_blank" class="px-8 py-4 bg-white border border-gray-200 rounded-full shadow-apple card-hover hover:shadow-apple-hover hover:scale-105">
+          前往B站主页
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 关于区 - 苹果风极简卡片 -->
+  <section id="about" class="py-20 px-4 bg-white">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-16">
+        <h2 class="text-[clamp(1.8rem,5vw,3rem)] font-bold mb-4">关于 影视飓风</h2>
+        <p class="text-gray-500 max-w-2xl mx-auto">由潘天鸿（Tim）创立，国内最具影响力的影像科普团队</p>
+      </div>
+      <div class="grid md:grid-cols-2 gap-10 items-center">
+        <div class="rounded-2xl overflow-hidden shadow-apple">
+          <img src="https://i0.hdslb.com/bfs/face/9292929292929292929292929292929292929292.jpg" alt="影视飓风创始人Tim" class="w-full h-auto object-cover">
+        </div>
+        <div class="space-y-6">
+          <p class="text-lg leading-relaxed">
+            影视飓风是B站千万粉丝级影像科技UP主，专注于<strong>影视器材评测、影像技术科普、纪录片制作、幕后创作分享</strong>。
+          </p>
+          <p class="text-lg leading-relaxed">
+            团队以专业、硬核、高品质的内容著称，用通俗易懂的方式让大众了解影像行业，累计播放量超<strong>10亿</strong>，是国内影像领域标杆级自媒体。
+          </p>
+          <div class="flex gap-6 text-2xl">
+            <i class="fa fa-video-camera text-apple-blue"></i>
+            <i class="fa fa-camera text-apple-blue"></i>
+            <i class="fa fa-film text-apple-blue"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 代表作区 - 苹果式网格卡片 -->
+  <section id="works" class="py-20 px-4 bg-apple-gray">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-16">
+        <h2 class="text-[clamp(1.8rem,5vw,3rem)] font-bold mb-4">经典代表作</h2>
+        <p class="text-gray-500">百万播放量的高品质影像内容</p>
+      </div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- 作品卡片1 -->
+        <div class="bg-white rounded-2xl shadow-apple card-hover hover:shadow-apple-hover hover:-translate-y-2 overflow-hidden">
+          <img src="https://p.qqan.com/up/2021-6/16232169464949976.jpg" alt="8K全流程制作" class="w-full h-48 object-cover">
+          <div class="p-6">
+            <h3 class="text-xl font-semibold mb-2">8K全流程制作</h3>
+            <p class="text-gray-500">国内首部8K影像全流程深度解析，颠覆行业认知</p>
+          </div>
+        </div>
+        <!-- 作品卡片2 -->
+        <div class="bg-white rounded-2xl shadow-apple card-hover hover:shadow-apple-hover hover:-translate-y-2 overflow-hidden">
+          <img src="https://img1.baidu.com/it/u=826894602,2832196070&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=751" alt="中国航天幕后" class="w-full h-48 object-cover">
+          <div class="p-6">
+            <h3 class="text-xl font-semibold mb-2">中国航天幕后</h3>
+            <p class="text-gray-500">探访航天拍摄现场，记录大国重器的影像故事</p>
+          </div>
+        </div>
+        <!-- 作品卡片3 -->
+        <div class="bg-white rounded-2xl shadow-apple card-hover hover:shadow-apple-hover hover:-translate-y-2 overflow-hidden">
+          <img src="https://img0.baidu.com/it/u=2586502403,1320102007&fm=253&fmt=auto&app=120&f=JPEG?w=740&h=740" alt="专业器材评测" class="w-full h-48 object-cover">
+          <div class="p-6">
+            <h3 class="text-xl font-semibold mb-2">RED Komodo 评测</h3>
+            <p class="text-gray-500">硬核专业摄影机评测，百万影像爱好者必看</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 核心理念区 -->
+  <section id="idea" class="py-20 px-4 bg-white">
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="text-[clamp(1.8rem,5vw,3rem)] font-bold mb-10">核心理念</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+        <div class="p-6">
+          <i class="fa fa-lightbulb-o text-4xl text-apple-blue mb-4"></i>
+          <h3 class="text-xl font-semibold mb-2">专业科普</h3>
+          <p class="text-gray-500">用简单的语言讲解复杂的影像技术</p>
+        </div>
+        <div class="p-6">
+          <i class="fa fa-heart text-4xl text-apple-blue mb-4"></i>
+          <h3 class="text-xl font-semibold mb-2">传递热爱</h3>
+          <p class="text-gray-500">让更多人爱上影像，感受创作的魅力</p>
+        </div>
+        <div class="p-6">
+          <i class="fa fa-star text-4xl text-apple-blue mb-4"></i>
+          <h3 class="text-xl font-semibold mb-2">品质至上</h3>
+          <p class="text-gray-500">坚持最高标准的内容制作与输出</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 页脚 - 苹果极简风格 -->
+  <footer class="py-10 px-4 bg-apple-gray text-center text-gray-500">
+    <div class="max-w-6xl mx-auto">
+      <p class="mb-4">&copy; 2025 影视飓风个人主页 | 苹果风格设计</p>
+      <div class="flex justify-center gap-6 text-xl mb-4">
+        <a href="https://space.bilibili.com/144318" target="_blank" class="hover:text-apple-blue transition-colors">
+          <i class="fa fa-play-circle"></i>
+        </a>
+        <a href="#" class="hover:text-apple-blue transition-colors">
+          <i class="fa fa-weibo"></i>
+        </a>
+        <a href="#" class="hover:text-apple-blue transition-colors">
+          <i class="fa fa-instagram"></i>
+        </a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
