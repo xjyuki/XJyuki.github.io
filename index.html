@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>张俊杰 | 个人主页</title>
+  <!-- 引入Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- 引入Font Awesome图标 -->
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <!-- 苹果风格配置 -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            apple: {
+              gray: '#F5F5F7',
+              dark: '#1D1D1F',
+              blue: '#0071E3',
+              light: '#FFFFFF',
+              purple: '#5856D6',
+              cyan: '#5AC8FA'
+            }
+          },
+          fontFamily: {
+            sans: ['-apple-system', 'BlinkMacSystemFont', 'Inter', 'sans-serif']
+          },
+          boxShadow: {
+            'apple': '0 4px 20px rgba(0, 0, 0, 0.08)',
+            'apple-hover': '0 8px 30px rgba(0, 0, 0, 0.12)'
+          }
+        }
+      }
+    }
+  </script>
+  <style type="text/tailwindcss">
+    @layer utilities {
+      /* 苹果毛玻璃效果 */
+      .glass {
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        background-color: rgba(255, 255, 255, 0.8);
+      }
+      /* 苹果渐变文字 */
+      .text-gradient {
+        background: linear-gradient(90deg, #0071E3, #5AC8FA);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      /* 平滑滚动 */
+      html {
+        scroll-behavior: smooth;
+      }
+      /* 卡片微动效 */
+      .card-hover {
+        transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+      }
+      /* 时间线样式 */
+      .timeline-item::before {
+        content: '';
+        position: absolute;
+        left: -21px;
+        top: 6px;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background-color: #0071E3;
+        border: 3px solid #F5F5F7;
+      }
+      /* 荣誉展示动画 */
+      .fade-in-up {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.6s ease-out;
+      }
+      .fade-in-up.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .honor-card-hover {
+        transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+      }
+      .honor-card-hover:hover {
+        transform: translateY(-8px) scale(1.02);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+      }
+      /* 背景核心样式 */
+      .bg-base {
+        background-color: #F5F5F7;
+        background-image: 
+          radial-gradient(circle at 20% 50%, rgba(90, 200, 250, 0.05) 0%, transparent 50%),
+          radial-gradient(circle at 80% 20%, rgba(88, 86, 214, 0.05) 0%, transparent 50%),
+          radial-gradient(circle at 40% 80%, rgba(0, 113, 227, 0.05) 0%, transparent 50%);
+        background-size: 100% 100%;
+        background-attachment: fixed;
+      }
+      /* 微妙网格纹理 */
+      .bg-grid {
+        background-image: 
+          linear-gradient(rgba(0, 0, 0, 0.02) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
+        background-size: 40px 40px;
+        background-attachment: fixed;
+      }
+      /* 浮动元素动画 */
+      .float {
+        animation: float 8s ease-in-out infinite;
+      }
+      .float-delay-1 {
+        animation: float 8s ease-in-out 2s infinite;
+      }
+      .float-delay-2 {
+        animation: float 8s ease-in-out 4s infinite;
+      }
+      .float-delay-3 {
+        animation: float 8s ease-in-out 6s infinite;
+      }
+      /* 缓慢旋转动画 */
+      .rotate-slow {
+        animation: rotate 20s linear infinite;
+      }
+      /* 鼠标跟随光影 */
+      .mouse-light {
+        position: fixed;
+        width: 400px;
+        height: 400px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(90, 200, 250, 0.08) 0%, transparent 70%);
+        pointer-events: none;
+        z-index: 0;
+        transform: translate(-50%, -50%);
+        transition: all 0.15s ease-out;
+      }
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-25px) rotate(2deg); }
+      100% { transform: translateY(0px) rotate(0deg); }
+    }
+
+    @keyframes rotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body class="bg-base bg-grid text-apple-dark overflow-x-hidden">
+  <!-- 鼠标跟随光影效果 -->
+  <div id="mouseLight" class="mouse-light"></div>
+
+  <!-- 全局背景装饰元素（多层视差效果） -->
+  <div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
+    <!-- 大尺寸渐变圆 -->
+    <div class="absolute top-10 left-5 w-96 h-96 bg-apple-cyan/5 rounded-full blur-3xl float"></div>
+    <div class="absolute top-60 right-10 w-[500px] h-[500px] bg-apple-purple/5 rounded-full blur-3xl float-delay-1"></div>
+    <div class="absolute bottom-20 left-1/4 w-80 h-80 bg-apple-blue/5 rounded-full blur-3xl float-delay-2"></div>
+    
+    <!-- 中尺寸半透明圆 -->
+    <div class="absolute top-1/3 right-1/4 w-48 h-48 bg-white/30 rounded-full blur-2xl float-delay-3"></div>
+    <div class="absolute bottom-1/3 left-1/5 w-36 h-36 bg-apple-blue/10 rounded-full blur-xl float"></div>
+    
+    <!-- 小尺寸几何装饰 -->
+    <div class="absolute top-20 right-1/3 w-4 h-4 bg-apple-blue/20 rounded-full float-delay-1"></div>
+    <div class="absolute top-1/2 left-10 w-3 h-3 bg-apple-purple/20 rounded-full float-delay-2"></div>
+    <div class="absolute bottom-40 right-1/5 w-5 h-5 bg-apple-cyan/20 rounded-full float-delay-3"></div>
+    
+    <!-- 细线条装饰 -->
+    <div class="absolute top-1/4 left-0 w-full h-px bg-gradient-to-r from-transparent via-apple-blue/10 to-transparent rotate-slow"></div>
+    <div class="absolute top-3/4 left-0 w-full h-px bg-gradient-to-r from-transparent via-apple-purple/10 to-transparent rotate-slow" style="animation-direction: reverse;"></div>
+  </div>
+
+  <!-- 顶部导航栏 - 苹果毛玻璃固定导航 -->
+  <nav class="glass fixed w-full top-0 z-50 px-4 md:px-8 py-3">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <a href="#" class="flex items-center gap-2">
+        <span class="text-xl font-bold text-gradient">张俊杰</span>
+      </a>
+      <div class="hidden md:flex items-center gap-8">
+        <a href="#home" class="hover:text-apple-blue transition-colors">首页</a>
+        <a href="#about" class="hover:text-apple-blue transition-colors">关于我</a>
+        <a href="#education" class="hover:text-apple-blue transition-colors">教育背景</a>
+        <a href="#experience" class="hover:text-apple-blue transition-colors">实习经历</a>
+        <a href="#skills" class="hover:text-apple-blue transition-colors">技能证书</a>
+        <a href="#honors" class="hover:text-apple-blue transition-colors">荣誉展示</a>
+        <a href="#contact" class="hover:text-apple-blue transition-colors">联系我</a>
+      </div>
+      <button id="menuBtn" class="md:hidden text-xl">
+        <i class="fa fa-bars"></i>
+      </button>
+    </div>
+    <!-- 移动端菜单 -->
+    <div id="mobileMenu" class="md:hidden hidden absolute top-full left-0 w-full glass shadow-apple py-4 px-6 mt-1">
+      <div class="flex flex-col space-y-4">
+        <a href="#home" class="hover:text-apple-blue transition-colors">首页</a>
+        <a href="#about" class="hover:text-apple-blue transition-colors">关于我</a>
+        <a href="#education" class="hover:text-apple-blue transition-colors">教育背景</a>
+        <a href="#experience" class="hover:text-apple-blue transition-colors">实习经历</a>
+        <a href="#skills" class="hover:text-apple-blue transition-colors">技能证书</a>
+        <a href="#honors" class="hover:text-apple-blue transition-colors">荣誉展示</a>
+        <a href="#contact" class="hover:text-apple-blue transition-colors">联系我</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 英雄区 - 苹果式全屏极简主页 -->
+  <section id="home" class="min-h-screen flex items-center justify-center px-4 pt-20 relative z-10">
+    <div class="max-w-6xl mx-auto text-center">
+      <div class="mb-8">
+        <img src="https://picsum.photos/id/64/300/300" alt="张俊杰头像" class="w-32 h-32 md:w-40 md:h-40 rounded-full mx-auto object-cover shadow-apple border-4 border-white">
+      </div>
+      <h1 class="text-[clamp(2.5rem,8vw,5rem)] font-bold leading-tight mb-4">
+        张俊杰
+      </h1>
+      <p class="text-[clamp(1.2rem,3vw,1.8rem)] text-gray-600 max-w-3xl mx-auto mb-8">
+        电子商务专业 | 电商运营 | 跨境电商 | 新媒体运营
+      </p>
+      <p class="text-lg text-gray-500 max-w-2xl mx-auto mb-10">
+        细心从每一个小细节开始
+      </p>
+      <div class="flex flex-wrap justify-center gap-4">
+        <a href="#contact" class="px-8 py-4 bg-apple-blue text-white rounded-full shadow-apple card-hover hover:shadow-apple-hover hover:scale-105">
+          联系我
+        </a>
+        <a href="#" class="px-8 py-4 bg-white border border-gray-200 rounded-full shadow-apple card-hover hover:shadow-apple-hover hover:scale-105">
+          下载简历
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 关于我 -->
+  <section id="about" class="py-20 px-4 bg-white/80 backdrop-blur-sm relative z-10">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-16">
+        <h2 class="text-[clamp(1.8rem,5vw,3rem)] font-bold mb-4">关于我</h2>
+        <p class="text-gray-500 max-w-2xl mx-auto">用结构化思维与务实行动力创造价值</p>
+      </div>
+      <div class="grid md:grid-cols-2 gap-12 items-center">
+        <div class="space-y-6">
+          <p class="text-lg leading-relaxed">
+            本人具有较强的逻辑分析、战略规划与目标导向能力。系统掌握电商运营、数据分析、供应链管理等专业知识，擅长拆解复杂问题、注重结果与效率，乐于通过理性分析解决实际问题，具备快速学习与适应新环境的能力。
+          </p>
+          <p class="text-lg leading-relaxed">
+            期待在电商运营、商业分析等岗位中，以专业能力为团队创造价值，同时实现个人职业成长。
+          </p>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          <div class="bg-apple-gray rounded-xl p-5 card-hover hover:shadow-apple">
+            <p class="text-gray-500 text-sm mb-1">姓名</p>
+            <p class="font-semibold">张俊杰</p>
+          </div>
+          <div class="bg-apple-gray rounded-xl p-5 card-hover hover:shadow-apple">
+            <p class="text-gray-500 text-sm mb-1">出生年月</p>
+            <p class="font-semibold">2005.10.30</p>
+          </div>
+          <div class="bg-apple-gray rounded-xl p-5 card-hover hover:shadow-apple">
+            <p class="text-gray-500 text-sm mb-1">性别</p>
+            <p class="font-semibold">男</p>
+          </div>
+          <div class="bg-apple-gray rounded-xl p-5 card-hover hover:shadow-apple">
+            <p class="text-gray-500 text-sm mb-1">政治面貌</p>
+            <p class="font-semibold">群众</p>
+          </div>
+          <div class="bg-apple-gray rounded-xl p-5 card-hover hover:shadow-apple">
+            <p class="text-gray-500 text-sm mb-1">民族</p>
+            <p class="font-semibold">汉族</p>
+          </div>
+          <div class="bg-apple-gray rounded-xl p-5 card-hover hover:shadow-apple">
+            <p class="text-gray-500 text-sm mb-1">住址</p>
+            <p class="font-semibold">江西省上饶市</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 教育背景 -->
+  <section id="education" class="py-20 px-4 relative z-10">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-16">
+        <h2 class="text-[clamp(1.8rem,5vw,3rem)] font-bold mb-4">教育背景</h2>
+        <p class="text-gray-500 max-w-2xl mx-auto">系统学习电商全链路专业知识</p>
+      </div>
+      <div class="max-w-3xl mx-auto">
+        <div class="relative border-l-2 border-apple-blue pl-8 ml-4">
+          <div class="timeline-item relative mb-12">
+            <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-apple p-6 card-hover hover:shadow-apple-hover">
+              <div class="flex flex-wrap justify-between items-start mb-4">
+                <div>
+                  <h3 class="text-xl font-bold">江西环境工程职业学院</h3>
+                  <p class="text-apple-blue font-medium">电子商务 专科</p>
+                </div>
+                <span class="text-gray-500">2024.09 - 2027.06</span>
+              </div>
+              <p class="text-gray-600 mb-3">主修课程：</p>
+              <div class="flex flex-wrap gap-2">
+                <span class="bg-apple-gray px-3 py-1 rounded-full text-sm">管理学原理</span>
+                <span class="bg-apple-gray px-3 py-1 rounded-full text-sm">经济学基础</span>
+                <span class="bg-apple-gray px-3 py-1 rounded-full text-sm">商务数据分析</span>
+                <span class="bg-apple-gray px-3 py-1 rounded-full text-sm">视觉营销设计</span>
+                <span class="bg-apple-gray px-3 py-1 rounded-full text-sm">直播电商</span>
+                <span class="bg-apple-gray px-3 py-1 rounded-full text-sm">数字营销</span>
+                <span class="bg-apple-gray px-3 py-1 rounded-full text-sm">网店运营</span>
+                <span class="bg-apple-gray px-3 py-1 rounded-full text-sm">新媒体运营</span>
+                <span class="bg-apple-gray px-3 py-1 rounded-full text-sm">跨境电商</span>
+                <span class="bg-apple-gray px-3 py-1 rounded-full text-sm">品牌管理</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 实习经历 -->
+  <section id="experience" class="py-20 px-4 bg-white/80 backdrop-blur-sm relative z-10">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-16">
+        <h2 class="text-[clamp(1.8rem,5vw,3rem)] font-bold mb-4">实习经历</h2>
+        <p class="text-gray-500 max-w-2xl mx-auto">在实践中积累电商运营实战经验</p>
+      </div>
+      <div class="max-w-3xl mx-auto">
+        <div class="bg-apple-gray/50 backdrop-blur-sm rounded-2xl shadow-apple p-8 card-hover hover:shadow-apple-hover">
+          <div class="flex flex-wrap justify-between items-start mb-6">
+            <div>
+              <h3 class="text-xl font-bold">赣州市嘉虹信息科技有限公司</h3>
+              <p class="text-apple-blue font-medium">客服实训</p>
+            </div>
+            <span class="text-gray-500">2025.05 - 2025.12</span>
+          </div>
+          <ul class="space-y-4 text-gray-700">
+            <li class="flex items-start gap-3">
+              <i class="fa fa-check-circle text-apple-blue mt-1"></i>
+              <span>负责店铺售前咨询，通过阿里旺旺等渠道响应客户需求，日均接待客户80+，解答准确率98%以上，客户满意度达95%</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <i class="fa fa-check-circle text-apple-blue mt-1"></i>
+              <span>参与双十一客服实训项目，表现突出，荣获<strong>"服务之星"</strong>称号，并作为优秀代表上台发言</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <i class="fa fa-check-circle text-apple-blue mt-1"></i>
+              <span>协助整理客户反馈数据，记录高频咨询问题与产品优化建议，处理快递、赠品发货、开票等事务，为店铺运营策略调整提供支持</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <i class="fa fa-check-circle text-apple-blue mt-1"></i>
+              <span>参与店铺促销活动执行，协助解答活动规则咨询、订单备注核对等工作，助力活动期间店铺转化率提升</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 技能证书与校园经历 -->
+  <section id="skills" class="py-20 px-4 relative z-10">
+    <div class="max-w-6xl mx-auto">
+      <div class="grid md:grid-cols-2 gap-12">
+        <!-- 技能证书 -->
+        <div>
+          <h2 class="text-[clamp(1.5rem,4vw,2.5rem)] font-bold mb-8 text-center md:text-left">技能证书</h2>
+          <div class="space-y-4">
+            <div class="bg-white/80 backdrop-blur-sm rounded-xl shadow-apple p-5 card-hover hover:shadow-apple-hover flex items-center gap-4">
+              <i class="fa fa-certificate text-2xl text-apple-blue"></i>
+              <div>
+                <h3 class="font-semibold">高级电子商务师证书</h3>
+              </div>
+            </div>
+            <div class="bg-white/80 backdrop-blur-sm rounded-xl shadow-apple p-5 card-hover hover:shadow-apple-hover flex items-center gap-4">
+              <i class="fa fa-laptop text-2xl text-apple-blue"></i>
+              <div>
+                <h3 class="font-semibold">计算机二级MS Office证书</h3>
+              </div>
+            </div>
+            <div class="bg-white/80 backdrop-blur-sm rounded-xl shadow-apple p-5 card-hover hover:shadow-apple-hover flex items-center gap-4">
+              <i class="fa fa-paint-brush text-2xl text-apple-blue"></i>
+              <div>
+                <h3 class="font-semibold">掌握PS、AE及剪辑软件</h3>
+              </div>
+            </div>
+            <div class="bg-white/80 backdrop-blur-sm rounded-xl shadow-apple p-5 card-hover hover:shadow-apple-hover flex items-center gap-4">
+              <i class="fa fa-car text-2xl text-apple-blue"></i>
+              <div>
+                <h3 class="font-semibold">C1驾驶证</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 校园经历 -->
+        <div>
+          <h2 class="text-[clamp(1.5rem,4vw,2.5rem)] font-bold mb-8 text-center md:text-left">校园经历</h2>
+          <div class="bg-white/80 backdrop-blur-sm rounded-xl shadow-apple p-6 card-hover hover:shadow-apple-hover">
+            <div class="flex justify-between items-start mb-4">
+              <h3 class="font-bold">江西环境工程职业学院</h3>
+              <span class="text-gray-500">2024.09 - 2027.06</span>
+            </div>
+            <ul class="space-y-3 text-gray-700">
+              <li class="flex items-start gap-3">
+                <i class="fa fa-star text-apple-blue mt-1"></i>
+                <span>加入旅游与商贸学院志愿服务分中心，担任<strong>办公部部长</strong></span>
+              </li>
+              <li class="flex items-start gap-3">
+                <i class="fa fa-star text-apple-blue mt-1"></i>
+                <span>参加2025京东山茶油电商培训</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <i class="fa fa-star text-apple-blue mt-1"></i>
+                <span>参加十分钟自媒体共创营课程培训</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <i class="fa fa-star text-apple-blue mt-1"></i>
+                <span>参加2024ITMC电子商务运营培训</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <i class="fa fa-star text-apple-blue mt-1"></i>
+                <span>参加2025数字营销全天候课程培训</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <i class="fa fa-star text-apple-blue mt-1"></i>
+                <span>参加2025年世界职业技能大赛总决赛争夺赛志愿者</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <i class="fa fa-star text-apple-blue mt-1"></i>
+                <span>参加2026电商职教周研学活动</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 荣誉展示板块 -->
+  <section id="honors" class="py-20 px-4 bg-white/80 backdrop-blur-sm relative overflow-hidden z-10">
+    <div class="max-w-7xl mx-auto relative z-10">
+      <div class="text-center mb-16">
+        <h2 class="text-[clamp(1.8rem,5vw,3rem)] font-bold mb-4 fade-in-up">荣誉展示</h2>
+        <p class="text-gray-500 max-w-2xl mx-auto fade-in-up">记录成长路上的每一份认可</p>
+      </div>
+
+      <!-- 个人证书 -->
+      <div class="mb-20">
+        <h3 class="text-2xl font-bold mb-10 text-center fade-in-up">专业证书</h3>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-4xl mx-auto">
+          <!-- 证书1 ⚠️ PPT第1张：高级电子商务师证书 -->
+          <div class="bg-white rounded-2xl shadow-apple overflow-hidden honor-card-hover fade-in-up">
+            <img 
+              src="images/高级电子商务师证书.jpg" 
+              alt="高级电子商务师证书" 
+              class="w-full h-auto object-cover"
+            >
+            <div class="p-4 text-center">
+              <h4 class="font-semibold text-lg">高级电子商务师证书</h4>
+              <p class="text-sm text-gray-500">人力资源岗位技能行业协会</p>
+            </div>
+          </div>
+
+          <!-- 证书2 ⚠️ PPT第2张：全国计算机等级考试二级证书 -->
+          <div class="bg-white rounded-2xl shadow-apple overflow-hidden honor-card-hover fade-in-up">
+            <img 
+              src="images/计算机二级证书.jpg" 
+              alt="全国计算机等级考试二级MS Office证书" 
+              class="w-full h-auto object-cover"
+            >
+            <div class="p-4 text-center">
+              <h4 class="font-semibold text-lg">计算机二级MS Office证书</h4>
+              <p class="text-sm text-gray-500">教育部考试中心</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 个人荣誉 -->
+      <div class="mb-20">
+        <h3 class="text-2xl font-bold mb-10 text-center fade-in-up">个人荣誉</h3>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <!-- 荣誉1 ⚠️ PPT第3张：世界职业院校技能大赛志愿者证书 -->
+          <div class="bg-white rounded-2xl shadow-apple overflow-hidden honor-card-hover fade-in-up">
+            <img 
+              src="images/世界职业技能大赛志愿者证书.jpg" 
+              alt="2025年世界职业院校技能大赛总决赛争夺赛志愿者证书" 
+              class="w-full h-auto object-cover"
+            >
+            <div class="p-3 text-center">
+              <h4 class="font-semibold">世界职业院校技能大赛志愿者</h4>
+            </div>
+          </div>
+
+          <!-- 荣誉2 ⚠️ PPT第4张：嘉虹618实训结业证书 -->
+          <div class="bg-white rounded-2xl shadow-apple overflow-hidden honor-card-hover fade-in-up">
+            <img 
+              src="images/嘉虹订单班结业证书.jpg" 
+              alt="嘉虹618客服实训项目结业证书" 
+              class="w-full h-auto object-cover"
+            >
+            <div class="p-3 text-center">
+              <h4 class="font-semibold">嘉虹618实训结业证书</h4>
+            </div>
+          </div>
+
+          <!-- 荣誉3 ⚠️ PPT第5张：双十一实训"服务之星"证书 -->
+          <div class="bg-white rounded-2xl shadow-apple overflow-hidden honor-card-hover fade-in-up">
+            <img 
+              src="images/双十一服务之星证书.jpg" 
+              alt="双十一客服实训"服务之星"荣誉证书" 
+              class="w-full h-auto object-cover"
+            >
+            <div class="p-3 text-center">
+              <h4 class="font-semibold">双十一实训"服务之星"</h4>
+            </div>
+          </div>
+
+          <!-- 荣誉4 ⚠️ PPT第6张：优秀志愿服务工作者证书 -->
+          <div class="bg-white rounded-2xl shadow-apple overflow-hidden honor-card-hover fade-in-up">
+            <img 
+              src="images/优秀志愿服务工作者证书.jpg" 
+              alt="2024-2025学年优秀志愿服务工作者证书" 
+              class="w-full h-auto object-cover"
+            >
+            <div class="p-3 text-center">
+              <h4 class="font-semibold">优秀志愿服务工作者</h4>
+            </div>
+          </div>
+
+          <!-- 荣誉5 ⚠️ PPT第7张：新生迎新优秀志愿者证书 -->
+          <div class="bg-white rounded-2xl shadow-apple overflow-hidden honor-card-hover fade-in-up">
+            <img 
+              src="images/新生迎新优秀志愿者证书.jpg" 
+              alt="2025级新生迎新工作优秀志愿者证书" 
+              class="w-full h-auto object-cover"
+            >
+            <div class="p-3 text-center">
+              <h4 class="font-semibold">新生迎新优秀志愿者</h4>
+            </div>
+          </div>
+
+          <!-- 荣誉6 ⚠️ PPT第8张：优秀学生工作者证书 -->
+          <div class="bg-white rounded-2xl shadow-apple overflow-hidden honor-card-hover fade-in-up">
+            <img 
+              src="images/优秀学生工作者证书.jpg" 
+              alt="商学院大学生志愿服务分中心优秀学生工作者证书" 
+              class="w-full h-auto object-cover"
+            >
+            <div class="p-3 text-center">
+              <h4 class="font-semibold">优秀学生工作者</h4>
+            </div>
+          </div>
+
+          <!-- 荣誉7 ⚠️ PPT第9张：寒假返家乡社会实践优秀个人证书 -->
+          <div class="bg-white rounded-2xl shadow-apple overflow-hidden honor-card-hover fade-in-up">
+            <img 
+              src="images/返家乡社会实践优秀个人证书.jpg" 
+              alt="2025年寒假"返家乡"社会实践优秀个人证书" 
+              class="w-full h-auto object-cover"
+            >
+            <div class="p-3 text-center">
+              <h4 class="font-semibold">返家乡社会实践优秀个人</h4>
+            </div>
+          </div>
+
+          <!-- 荣誉8 ⚠️ PPT第10张：2025赣州马拉松志愿者证书 -->
+          <div class="bg-white rounded-2xl shadow-apple overflow-hidden honor-card-hover fade-in-up">
+            <img 
+              src="images/赣州马拉松志愿者证书.jpg" 
+              alt="2025赣州马拉松志愿者证书" 
+              class="w-full h-auto object-cover"
+            >
+            <div class="p-3 text-center">
+              <h4 class="font-semibold">赣州马拉松志愿者</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 运营账号 -->
+      <div>
+        <h3 class="text-2xl font-bold mb-10 text-center fade-in-up">运营账号展示</h3>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
+          <!-- B站账号 ⚠️ PPT第11张：B站主页截图 -->
+          <div class="bg-white rounded-2xl shadow-apple overflow-hidden honor-card-hover fade-in-up">
+            <div class="p-4 bg-[#FB7299] text-white flex items-center gap-3">
+              <i class="fa fa-play-circle text-2xl"></i>
+              <h4 class="font-semibold text-lg">B站：艺术派大星</h4>
+            </div>
+            <img 
+              src="images/B站主页截图.jpg" 
+              alt="B站艺术派大星主页截图" 
+              class="w-full h-auto object-cover"
+            >
+            <div class="p-4">
+              <div class="flex justify-around text-center">
+                <div>
+                  <p class="font-bold text-xl">14</p>
+                  <p class="text-sm text-gray-500">投稿</p>
+                </div>
+                <div>
+                  <p class="font-bold text-xl">51</p>
+                  <p class="text-sm text-gray-500">粉丝</p>
+                </div>
+                <div>
+                  <p class="font-bold text-xl">1.6万</p>
+                  <p class="text-sm text-gray-500">播放</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 抖音账号 ⚠️ PPT第12张：抖音主页截图 -->
+          <div class="bg-white rounded-2xl shadow-apple overflow-hidden honor-card-hover fade-in-up">
+            <div class="p-4 bg-black text-white flex items-center gap-3">
+              <i class="fa fa-music text-2xl"></i>
+              <h4 class="font-semibold text-lg">抖音：不知名小杰</h4>
+            </div>
+            <img 
+              src="images/抖音主页截图.jpg" 
+              alt="抖音不知名小杰主页截图" 
+              class="w-full h-auto object-cover"
+            >
+            <div class="p-4">
+              <div class="flex justify-around text-center">
+                <div>
+                  <p class="font-bold text-xl">14</p>
+                  <p class="text-sm text-gray-500">作品</p>
+                </div>
+                <div>
+                  <p class="font-bold text-xl">23</p>
+                  <p class="text-sm text-gray-500">粉丝</p>
+                </div>
+                <div>
+                  <p class="font-bold text-xl">298</p>
+                  <p class="text-sm text-gray-500">获赞</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 小红书账号 ⚠️ PPT第13张：小红书主页截图 -->
+          <div class="bg-white rounded-2xl shadow-apple overflow-hidden honor-card-hover fade-in-up">
+            <div class="p-4 bg-[#FF2442] text-white flex items-center gap-3">
+              <i class="fa fa-book text-2xl"></i>
+              <h4 class="font-semibold text-lg">小红书：xxxx</h4>
+            </div>
+            <img 
+              src="images/小红书主页截图.jpg" 
+              alt="小红书主页截图" 
+              class="w-full h-auto object-cover"
+            >
+            <div class="p-4">
+              <div class="flex justify-around text-center">
+                <div>
+                  <p class="font-bold text-xl">12</p>
+                  <p class="text-sm text-gray-500">笔记</p>
+                </div>
+                <div>
+                  <p class="font-bold text-xl">3</p>
+                  <p class="text-sm text-gray-500">粉丝</p>
+                </div>
+                <div>
+                  <p class="font-bold text-xl">30</p>
+                  <p class="text-sm text-gray-500">获赞收藏</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 联系我 -->
+  <section id="contact" class="py-20 px-4 relative z-10">
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="text-[clamp(1.8rem,5vw,3rem)] font-bold mb-4">联系我</h2>
+      <p class="text-gray-500 max-w-2xl mx-auto mb-12">期待与您的合作</p>
+      <div class="grid sm:grid-cols-3 gap-6 mb-12">
+        <a href="tel:1114514500" class="bg-white/80 backdrop-blur-sm rounded-xl p-6 card-hover hover:shadow-apple">
+          <i class="fa fa-phone text-3xl text-apple-blue mb-4"></i>
+          <h3 class="font-semibold mb-1">电话</h3>
+          <p class="text-gray-600">18279348221</p>
+        </a>
+        <a href="mailto:15145566246@qq.com" class="bg-white/80 backdrop-blur-sm rounded-xl p-6 card-hover hover:shadow-apple">
+          <i class="fa fa-envelope text-3xl text-apple-blue mb-4"></i>
+          <h3 class="font-semibold mb-1">邮箱</h3>
+          <p class="text-gray-600">1514599478@qq.com</p>
+        </a>
+        <div class="bg-white/80 backdrop-blur-sm rounded-xl p-6 card-hover hover:shadow-apple">
+          <i class="fa fa-map-marker text-3xl text-apple-blue mb-4"></i>
+          <h3 class="font-semibold mb-1">地址</h3>
+          <p class="text-gray-600">江西省上饶市</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 页脚 -->
+  <footer class="py-8 px-4 text-center text-gray-500 relative z-10">
+    <p>&copy; 2026 张俊杰 | 个人主页 | 自主设计</p>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    // 移动端菜单切换
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    menuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+      const icon = menuBtn.querySelector('i');
+      icon.classList.toggle('fa-bars');
+      icon.classList.toggle('fa-times');
+    });
+
+    // 点击导航链接关闭移动端菜单
+    document.querySelectorAll('#mobileMenu a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+        const icon = menuBtn.querySelector('i');
+        icon.classList.replace('fa-times', 'fa-bars');
+      });
+    });
+
+    // 导航栏滚动效果
+    window.addEventListener('scroll', () => {
+      const nav = document.querySelector('nav');
+      if (window.scrollY > 50) {
+        nav.classList.add('shadow-apple');
+      } else {
+        nav.classList.remove('shadow-apple');
+      }
+    });
+
+    // 荣誉展示滚动入场动画
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.fade-in-up').forEach(element => {
+      observer.observe(element);
+    });
+
+    // 为每个卡片添加不同的延迟
+    document.querySelectorAll('.fade-in-up').forEach((element, index) => {
+      element.style.transitionDelay = `${index * 0.1}s`;
+    });
+
+    // 鼠标跟随光影效果
+    const mouseLight = document.getElementById('mouseLight');
+    document.addEventListener('mousemove', (e) => {
+      mouseLight.style.left = e.clientX + 'px';
+      mouseLight.style.top = e.clientY + 'px';
+    });
+  </script>
+</body>
+</html>
